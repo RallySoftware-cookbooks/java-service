@@ -1,41 +1,21 @@
 use_inline_resources
 
 action :create do
-  validate_input(new_resource)
-  include_dependent_recipes(run_context)
-  define_service(node, new_resource)
-end
+  if new_resource.main_class && new_resource.jar 
+    raise "You can specify a main_class or a jar file but not both."
+  end
 
-private
-
-def include_dependent_recipes(run_context)
-  run_context.include_recipe 'java'
-  run_context.include_recipe 'bluepill'  
-end
-
-def validate_input(new_resource)
-  required_attrs = [:main_class, :classpath, :service_name, :user]
-  required_attrs.each { |attr|
-    attr_value = new_resource.send(attr)
-    raise "#{attr} must be defined when using the java_service provider." if attr_value.nil?
-  }
-end
-
-def define_service(node, new_resource)
-  props = system_properties(node, new_resource)
-  opts = jvm_options(node, new_resource)
+  unless new_resource.main_class || new_resource.jar
+    raise "You must specify main_class or jar"
+  end
 
   template "#{node[:bluepill][:conf_dir]}/#{new_resource.service_name}.pill" do
     source 'service.pill.erb'
     cookbook 'java-service'
     variables ({
       :name => new_resource.service_name,
-      :classpath => new_resource.classpath,
-      :system_properties => props,
-      :jvm_options => opts,
-      :main_class => new_resource.main_class,
-      :user => new_resource.user,
-      :args => new_resource.args
+      :java_command => java_command,
+      :user => new_resource.user
     })
   end
 
@@ -44,29 +24,20 @@ def define_service(node, new_resource)
   end
 end
 
-def system_properties(node, new_resource)
-  dash_d_params = ''
-  node[new_resource.name]['D'].each do |key, value|
-    dash_d_params.concat("-D#{key}#{build_value(value)}").concat(" ")
-  end
-  dash_d_params
-end
+def java_command
 
-def jvm_options(node, new_resource)
-  jvm_options = ''
-  node[new_resource.service_name]['jvm_options'].each do |key, value|
-    jvm_options.concat("-#{key}#{build_value(value)}").concat(" ")
-  end
-  jvm_options
-end
+  system_properties = new_resource.system_properties || node[new_resource.name]['java']['-D']
+  standard_options = new_resource.standard_options || node[new_resource.name]['java']['-']
+  non_standard_options = new_resource.non_standard_options || node[new_resource.name]['java']['-X']
+  hotspot_options = new_resource.hotspot_options || node[new_resource.name]['java']['-XX']
+  args = new_resource.args || node[new_resource.name]['java']['args']
 
-def build_value(value)
-  if value.nil?
-    value = ''
-  else
-    value = "=#{value}"
-  end
-  value
+  JavaCommand.new(new_resource.main_class || new_resource.jar, {
+    :classpath => new_resource.classpath,
+    :system_properties => system_properties,
+    :standard_options => standard_options,
+    :non_standard_options => non_standard_options,
+    :hotspot_options => hotspot_options,
+    :args => args
+  })
 end
-
-  

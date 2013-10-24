@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 Bluepill.application("<%= @name %>") do |app|
   app.process("<%= @name %>") do |process|
-    process.start_command = "java -server -cp <%= @classpath %> <%= @system_properites %> <%= @jvm_options %> <%= @main_class %> <%= @args %>"
+    process.start_command = %q{<%= @java_command %>}
     process.pid_file = "/tmp/<%= @name %>.pid"
     process.uid = "<%= @user %>"
     process.gid = "<%= @user %>"
