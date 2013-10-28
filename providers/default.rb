@@ -15,7 +15,8 @@ action :create do
     variables ({
       :name => new_resource.service_name,
       :java_command => java_command,
-      :user => new_resource.user
+      :user => new_resource.user,
+      :working_dir => new_resource.working_dir
     })
   end
 
@@ -33,7 +34,7 @@ def java_command
   args = new_resource.args || node[new_resource.name]['java']['args']
 
   JavaCommand.new(new_resource.main_class || new_resource.jar, {
-    :classpath => new_resource.classpath,
+    :classpath => new_resource.classpath,    
     :system_properties => system_properties,
     :standard_options => standard_options,
     :non_standard_options => non_standard_options,

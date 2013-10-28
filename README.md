@@ -48,7 +48,8 @@ end
 * `standard_options` - a Hash of properties to be passed in as `-` params. For example `{'server' => nil, 'ea' => 'com.wombat.fruitbat'}` will produce `-server -ea:com.wombat.fruitbat`
 * `non_standard_options` - a Hash of properties to be passed in as '-X' params. For example `{'ms' => '128m', 'int' => nil, 'bootclasspath' => '/some/path'}` will produce `-Xms128m -Xint -Xbootclasspath:/some/path`
 * `hotspot_options` - a Hash of properties to be passed in as '-XX' params. For example `{'FlightRecorder' => true, 'LargePageSizeInBytes' => '128m'}` will produce `-XX:+FlightRecorder -XX:LargePageSizeInBytes=69m`
-* `args`, an array of arguments to pass to the at the end of the command line
+* `args` - an array of arguments to pass to the at the end of the command line
+* `working_dir` - the working directory for the Java process
 
 Instead of passing in `system_properties`, `standard_options`, `non_standard_options`, `hotspot_options`, `args` you can set node attributes like:
 

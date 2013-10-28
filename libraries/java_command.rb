@@ -31,7 +31,7 @@ class JavaCommand
 
   def map_options(options, klass)
     options = {} unless options
-    options.map { |name, value| klass.new(name.dup, value) }
+    options.map { |name, value| klass.new(name.to_s.dup, value) }
   end
 
   def generate_command

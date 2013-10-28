@@ -25,4 +25,5 @@ end
 java_service 'echoserver2' do
   jar '/root/server.jar'
   user 'root'
+  working_dir '/root'
 end

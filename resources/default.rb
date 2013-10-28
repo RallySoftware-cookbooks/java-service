@@ -6,6 +6,7 @@ attribute :user, :kind_of => String, :required => true
 attribute :main_class, :kind_of => String
 attribute :jar, :kind_of => String
 attribute :classpath, :kind_of => String
+attribute :working_dir, :kind_of => String, :default => '.'
 attribute :system_properties, :kind_of => Hash
 attribute :standard_options, :kind_of => Hash
 attribute :non_standard_options, :kind_of => Hash
