@@ -26,4 +26,5 @@ java_service 'echoserver2' do
   jar '/root/server.jar'
   user 'root'
   working_dir '/root'
+  classpath Proc.new{ "late:bound:string" }
 end

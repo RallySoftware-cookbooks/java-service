@@ -26,7 +26,7 @@ action :create do
 end
 
 def java_command
-
+  classpath = new_resource.classpath.is_a?(Proc) ? instance_eval(&new_resource.classpath) : new_resource.classpath
   system_properties = new_resource.system_properties || node[new_resource.name]['java']['-D']
   standard_options = new_resource.standard_options || node[new_resource.name]['java']['-']
   non_standard_options = new_resource.non_standard_options || node[new_resource.name]['java']['-X']
@@ -34,7 +34,7 @@ def java_command
   args = new_resource.args || node[new_resource.name]['java']['args']
 
   JavaCommand.new(new_resource.main_class || new_resource.jar, {
-    :classpath => new_resource.classpath,    
+    :classpath => classpath,
     :system_properties => system_properties,
     :standard_options => standard_options,
     :non_standard_options => non_standard_options,

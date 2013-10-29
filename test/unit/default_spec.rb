@@ -10,6 +10,7 @@ describe 'java_service_test::default' do
   it "should create a pill file for a java command using a jar file" do
     expect(chef_run).to create_file_with_content '/etc/bluepill/echoserver2.pill', echoserver2_pill_file
   end
+
 end
 
 def echoserver_pill_file
@@ -34,7 +35,7 @@ def echoserver2_pill_file
 Bluepill.application("echoserver2") do |app|
   app.process("echoserver2") do |process|
     process.working_dir = "/root"
-    process.start_command = "java -Dport=9989 -server -Xms256m -XX:+UseConcMarkSweepGC -jar /root/server.jar foo bar"
+    process.start_command = "java -classpath late:bound:string -Dport=9989 -server -Xms256m -XX:+UseConcMarkSweepGC -jar /root/server.jar foo bar"
     process.pid_file = "/tmp/echoserver2.pid"
     process.uid = "root"
     process.gid = "root"
