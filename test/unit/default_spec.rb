@@ -18,7 +18,7 @@ def echoserver_pill_file
 Bluepill.application("echoserver") do |app|
   app.process("echoserver") do |process|
     process.working_dir = "."
-    process.start_command = %q{java -classpath /root/server.jar -Dport=9999 -server -Xms256m -XX:+UseConcMarkSweepGC EchoServer foo bar}
+    process.start_command = "java -classpath /root/server.jar -Dport=9999 -server -Xms256m -XX:+UseConcMarkSweepGC EchoServer foo bar"
     process.pid_file = "/tmp/echoserver.pid"
     process.uid = "root"
     process.gid = "root"
@@ -34,7 +34,7 @@ def echoserver2_pill_file
 Bluepill.application("echoserver2") do |app|
   app.process("echoserver2") do |process|
     process.working_dir = "/root"
-    process.start_command = %q{java -Dport=9989 -server -Xms256m -XX:+UseConcMarkSweepGC -jar /root/server.jar foo bar}
+    process.start_command = "java -Dport=9989 -server -Xms256m -XX:+UseConcMarkSweepGC -jar /root/server.jar foo bar"
     process.pid_file = "/tmp/echoserver2.pid"
     process.uid = "root"
     process.gid = "root"
