@@ -4,7 +4,7 @@ maintainer_email 'rallysoftware-cookbooks@rallydev.com'
 license          'MIT'
 description      'Installs/Configures java-service'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.1.0'
+version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 # include all tested operating systems as part of the supports section
 # supports 'centos'
