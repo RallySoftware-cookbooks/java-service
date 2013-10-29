@@ -2,7 +2,7 @@
 Bluepill.application("<%= @name %>") do |app|
   app.process("<%= @name %>") do |process|
     process.working_dir = "<%= @working_dir %>"
-    process.start_command = %q{<%= @java_command %>}
+    process.start_command = "<%= @java_command %>"
     process.pid_file = "/tmp/<%= @name %>.pid"
     process.uid = "<%= @user %>"
     process.gid = "<%= @user %>"
