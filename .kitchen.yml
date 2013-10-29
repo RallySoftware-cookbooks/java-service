@@ -1,6 +1,5 @@
 ---
 driver_plugin: vagrant
-provisioner: chef_zero
 platforms:
 - name: centos-6.4-x86_64
   driver_config:
