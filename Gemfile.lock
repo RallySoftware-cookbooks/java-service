@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/RallySoftware-cookbooks/cookbook-development
-  revision: 17c0531fef96014bdad8642e72fe86ac585ad6de
+  revision: 626b87405d4b4f310bc827a685975cf16bff4e95
   specs:
-    cookbook-development (0.0.1)
+    cookbook-development (0.0.3)
       berkshelf (~> 2.0)
       bundler (~> 1.3)
       chef (~> 11.6)
@@ -118,7 +118,7 @@ GEM
       little-plugger (>= 1.1.3)
       multi_json (>= 1.3.6)
     method_source (0.8.2)
-    mime-types (1.25)
+    mime-types (2.0)
     minitar (0.5.4)
     minitest (4.7.5)
     minitest-chef-handler (1.0.1)
