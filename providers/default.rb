@@ -27,11 +27,11 @@ end
 
 def java_command
   classpath = new_resource.classpath.is_a?(Proc) ? instance_eval(&new_resource.classpath) : new_resource.classpath
-  system_properties = new_resource.system_properties || node[new_resource.name]['java']['-D']
-  standard_options = new_resource.standard_options || node[new_resource.name]['java']['-']
-  non_standard_options = new_resource.non_standard_options || node[new_resource.name]['java']['-X']
-  hotspot_options = new_resource.hotspot_options || node[new_resource.name]['java']['-XX']
-  args = new_resource.args || node[new_resource.name]['java']['args']
+  system_properties = resource_or_node_value('system_properties', '-D')
+  standard_options = resource_or_node_value('standard_options', '-')
+  non_standard_options = resource_or_node_value('non_standard_options', '-X')
+  hotspot_options = resource_or_node_value('hotspot_options', '-XX')
+  args = resource_or_node_value('args', 'args', [])
 
   JavaCommand.new(new_resource.main_class || new_resource.jar, {
     :classpath => classpath,
@@ -41,4 +41,10 @@ def java_command
     :hotspot_options => hotspot_options,
     :args => args
   })
+end
+
+def resource_or_node_value(name, node_name, default_value = {})
+  from_resource = new_resource.send(name)
+  from_node = (node[new_resource.name] && node[new_resource.name]['java'] && node[new_resource.name]['java'][node_name]) || default_value
+  return from_resource || from_node
 end
