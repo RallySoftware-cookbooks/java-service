@@ -1,7 +1,7 @@
 include_recipe 'java-service'
 
 template '/root/EchoServer.java' do
-  source 'EchoServer.java.erb'  
+  source 'EchoServer.java.erb'
 end
 
 execute 'javac EchoServer.java' do
@@ -20,6 +20,7 @@ java_service 'echoserver' do
   main_class 'EchoServer'
   classpath '/root/server.jar'
   user 'root'
+  pill_file_dir '/root'
 end
 
 java_service 'echoserver2' do
@@ -32,4 +33,4 @@ end
 java_service 'nooptionsorargs' do
   jar '/root/server.jar'
   user 'root'
-end  
+end

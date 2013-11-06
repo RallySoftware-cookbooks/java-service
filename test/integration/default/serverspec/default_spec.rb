@@ -17,4 +17,7 @@ describe 'java_service_test::default' do
     it { should be_listening }
   end
 
+  describe file('/root/echoserver.pill') do
+    it { should be_file }
+  end
 end

@@ -4,7 +4,7 @@ describe 'java_service_test::default' do
   let (:chef_run) { ChefSpec::ChefRunner.new(:step_into => ['java-service']).converge 'java_service_test::default' }
 
   it "should create a pill file for a java command using a class" do
-    expect(chef_run).to create_file_with_content '/etc/bluepill/echoserver.pill', echoserver_pill_file
+    expect(chef_run).to create_file_with_content '/root/echoserver.pill', echoserver_pill_file
   end
 
   it "should create a pill file for a java command using a jar file" do
@@ -27,7 +27,7 @@ Bluepill.application("echoserver") do |app|
     process.pid_file = "/tmp/echoserver.pid"
     process.uid = "root"
     process.gid = "root"
-    process.daemonize = true  
+    process.daemonize = true
   end
 end
 PILL
@@ -43,7 +43,7 @@ Bluepill.application("echoserver2") do |app|
     process.pid_file = "/tmp/echoserver2.pid"
     process.uid = "root"
     process.gid = "root"
-    process.daemonize = true  
+    process.daemonize = true
   end
 end
 PILL
@@ -59,7 +59,7 @@ Bluepill.application("nooptionsorargs") do |app|
     process.pid_file = "/tmp/nooptionsorargs.pid"
     process.uid = "root"
     process.gid = "root"
-    process.daemonize = true  
+    process.daemonize = true
   end
 end
 PILL

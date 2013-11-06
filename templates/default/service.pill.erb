@@ -6,6 +6,6 @@ Bluepill.application("<%= @name %>") do |app|
     process.pid_file = "/tmp/<%= @name %>.pid"
     process.uid = "<%= @user %>"
     process.gid = "<%= @user %>"
-    process.daemonize = true  
+    process.daemonize = true
   end
 end

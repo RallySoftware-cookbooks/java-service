@@ -1,7 +1,7 @@
 use_inline_resources
 
 action :create do
-  if new_resource.main_class && new_resource.jar 
+  if new_resource.main_class && new_resource.jar
     raise 'You can specify a main_class or a jar file but not both.'
   end
 
@@ -9,7 +9,9 @@ action :create do
     raise 'You must specify main_class or jar'
   end
 
-  template "#{node['bluepill']['conf_dir']}/#{new_resource.service_name}.pill" do
+  pill_file_dir = new_resource.pill_file_dir || node['bluepill']['conf_dir']
+
+  template "#{pill_file_dir}/#{new_resource.service_name}.pill" do
     source 'service.pill.erb'
     cookbook 'java-service'
     variables ({
@@ -22,6 +24,7 @@ action :create do
 
   bluepill_service new_resource.service_name do
     action [:enable, :load, :start]
+    conf_dir pill_file_dir
   end
 end
 

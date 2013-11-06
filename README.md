@@ -50,6 +50,7 @@ end
 * `hotspot_options` - a Hash of properties to be passed in as '-XX' params. For example `{'FlightRecorder' => true, 'LargePageSizeInBytes' => '128m'}` will produce `-XX:+FlightRecorder -XX:LargePageSizeInBytes=69m`
 * `args` - an array of arguments to pass to the at the end of the command line
 * `working_dir` - the working directory for the Java process
+* `pill_file_dir` - the location to place the bluepill pill file. If not specified uses the default from bluepill.
 
 Instead of passing in `system_properties`, `standard_options`, `non_standard_options`, `hotspot_options`, `args` you can set node attributes like:
 

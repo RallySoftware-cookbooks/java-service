@@ -13,4 +13,4 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION')) rescue '0
 # depends should specify 2 symver places
 # depends 'rvm', '~> 0.4'
 depends 'java', '~> 1.13'
-depends 'bluepill', '~> 2.3'
+depends 'bluepill'
