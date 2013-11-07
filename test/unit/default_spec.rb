@@ -1,19 +1,12 @@
 require_relative 'spec_helper'
 
 describe 'java_service_test::default' do
-  let (:chef_run) { ChefSpec::ChefRunner.new(:step_into => ['java-service']).converge 'java_service_test::default' }
+  let(:steps_into) { ['java-service'] }
+  subject { ChefSpec::ChefRunner.new(:step_into => steps_into, :log_level => :error).converge described_recipe }
 
-  it "should create a pill file for a java command using a class" do
-    expect(chef_run).to create_file_with_content '/root/echoserver.pill', echoserver_pill_file
-  end
-
-  it "should create a pill file for a java command using a jar file" do
-    expect(chef_run).to create_file_with_content '/etc/bluepill/echoserver2.pill', echoserver2_pill_file
-  end
-
-  it "should create a pill file for a java command without options or args specified anywhere" do
-    expect(chef_run).to create_file_with_content '/etc/bluepill/nooptionsorargs.pill', nooptionsorargs_pill_file
-  end
+  it { should create_file_with_content '/root/echoserver.pill', echoserver_pill_file }
+  it { should create_file_with_content '/etc/bluepill/echoserver2.pill', echoserver2_pill_file }
+  it { should create_file_with_content '/etc/bluepill/nooptionsorargs.pill', nooptionsorargs_pill_file }
 
 end
 

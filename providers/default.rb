@@ -1,5 +1,33 @@
 use_inline_resources
 
+action :start do
+  delegate_action :start
+end
+
+action :stop do
+  delegate_action :stop
+end
+
+action :enable do
+  delegate_action :enable
+end
+
+action :disable do
+  delegate_action :disable
+end
+
+action :load do
+  delegate_action :load
+end
+
+action :restart do
+  delegate_action :restart
+end
+
+action :reload do
+  delegate_action :reload
+end
+
 action :create do
   if new_resource.main_class && new_resource.jar
     raise 'You can specify a main_class or a jar file but not both.'
@@ -25,6 +53,12 @@ action :create do
   bluepill_service new_resource.service_name do
     action [:enable, :load, :start]
     conf_dir pill_file_dir
+  end
+end
+
+def delegate_action(action)
+  bluepill_service new_resource.service_name do
+    action action
   end
 end
 

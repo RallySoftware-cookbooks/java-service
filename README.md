@@ -19,6 +19,8 @@ Includes the following recipes and should be included before using the java_serv
 ## Resources and Providers
 ### java_service
 
+#### :create is the default action, it sets up the service
+
 If you need to specify the class.
 
 ```ruby
@@ -64,6 +66,8 @@ default[:echoserver][:java][:args] = ['foo', 'bar']
 
 Note that 'echoserver' is ths value of `service_name` as specified in the `java_service` provider. This is useful if you want different values on different nodes.
 
+#### `java_service` also supports the following actions: :start, :stop, :enable, :disable, :load, :restart, and :reload
+These actions maniuplate the alreaded created service.
 
 ## License
 Copyright (C) 2013 Rally Software Development Corp

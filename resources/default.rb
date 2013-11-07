@@ -1,4 +1,4 @@
-actions :create
+actions :create, :start, :stop, :enable, :disable, :load, :restart, :reload
 default_action :create
 
 attribute :service_name, :kind_of => String, :name_attribute => true
