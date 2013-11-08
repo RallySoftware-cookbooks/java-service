@@ -13,3 +13,4 @@ attribute :non_standard_options, :kind_of => Hash
 attribute :hotspot_options, :kind_of => Hash
 attribute :args, :kind_of => Array
 attribute :pill_file_dir, :kind_of => String
+attribute :log_file, :kind_of => String

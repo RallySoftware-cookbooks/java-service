@@ -1,6 +1,7 @@
 use_inline_resources
 
 action :start do
+  rotate_service_log
   delegate_action :start
 end
 
@@ -21,6 +22,7 @@ action :load do
 end
 
 action :restart do
+  rotate_service_log
   delegate_action :restart
 end
 
@@ -29,6 +31,12 @@ action :reload do
 end
 
 action :create do
+  chef_gem 'logrotate' do
+    action :install
+  end
+
+  rotate_service_log
+
   if new_resource.main_class && new_resource.jar
     raise 'You can specify a main_class or a jar file but not both.'
   end
@@ -46,6 +54,7 @@ action :create do
       :name => new_resource.service_name,
       :java_command => java_command,
       :user => new_resource.user,
+      :log_file => new_resource.log_file,
       :working_dir => new_resource.working_dir
     })
   end
@@ -53,6 +62,17 @@ action :create do
   bluepill_service new_resource.service_name do
     action [:enable, :load, :start]
     conf_dir pill_file_dir
+  end
+end
+
+def rotate_service_log
+  require 'logrotate'
+
+  ruby_block "Rotating log file" do
+    block do
+      LogRotate.rotate_file(new_resource.log_file, :count => 5, :gzip => true)
+    end
+    only_if { !new_resource.log_file.nil? && ::File.exist?(new_resource.log_file) }
   end
 end
 

@@ -18,6 +18,7 @@ Bluepill.application("echoserver") do |app|
     process.working_dir = "."
     process.start_command = "java -classpath /root/server.jar -Dport=9999 -server -Xms256m -XX:+UseConcMarkSweepGC EchoServer foo bar"
     process.pid_file = "/tmp/echoserver.pid"
+    process.stdout = process.stderr = "/root/theoutput.log"
     process.uid = "root"
     process.gid = "root"
     process.daemonize = true

@@ -20,4 +20,21 @@ describe 'java_service_test::default' do
   describe file('/root/echoserver.pill') do
     it { should be_file }
   end
+
+  describe file('/root/theoutput.log') do
+    it { should be_file }
+  end
+
+  describe file('/root/theoutput.log.1.gz') do
+    it { should be_file }
+  end
+
+  describe file('/root/theoutput.log.2.gz') do
+    it { should be_file }
+  end
+
+  describe command('/opt/chef/embedded/bin/bluepill echoserver status') do
+    it { should return_stdout /up/ }
+    it { should_not return_stdout /unmonitored/ }
+  end
 end

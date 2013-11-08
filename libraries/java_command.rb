@@ -14,7 +14,7 @@ class JavaCommand
     @args                 = options[:args] || []
   end
 
-  def to_s    
+  def to_s
     generate_command
   end
 
@@ -38,7 +38,7 @@ class JavaCommand
     command = ['java']
 
     (command << '-classpath' << classpath) if classpath
-    
+
     command << system_properties
     command << standard_options
     command << non_standard_options
@@ -48,9 +48,20 @@ class JavaCommand
       command << '-jar' << jar
     else
       command << class_name
-    end    
+    end
 
     command << args
     command.flatten.join(' ')
+  end
+end
+
+def rotate_log_file(log_file_path=nil)
+  return if log_file_path.nil?
+
+  log_file_path = File.expand_path log_file_path
+  if File.exist? log_file_path
+    LogRotate.rotate_file(log_file_path, :count => 5, :gzip => true)
+  else
+    FileUtils.mkdir_p(File.dirname(log_file_path))
   end
 end

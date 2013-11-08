@@ -21,6 +21,7 @@ java_service 'echoserver' do
   classpath '/root/server.jar'
   user 'root'
   pill_file_dir '/root'
+  log_file '/root/theoutput.log'
 end
 
 java_service 'echoserver2' do
@@ -33,4 +34,16 @@ end
 java_service 'nooptionsorargs' do
   jar '/root/server.jar'
   user 'root'
+end
+
+java_service 'echoserver' do
+  action :restart
+end
+
+java_service 'echoserver' do
+  action :stop
+end
+
+java_service 'echoserver' do
+  action :start
 end

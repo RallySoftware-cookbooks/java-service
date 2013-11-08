@@ -3,7 +3,8 @@ Bluepill.application("<%= @name %>") do |app|
   app.process("<%= @name %>") do |process|
     process.working_dir = "<%= @working_dir %>"
     process.start_command = "<%= @java_command %>"
-    process.pid_file = "/tmp/<%= @name %>.pid"
+    process.pid_file = "/tmp/<%= @name %>.pid"<%- if @log_file %>
+    process.stdout = process.stderr = "<%= @log_file %>"<%- end %>
     process.uid = "<%= @user %>"
     process.gid = "<%= @user %>"
     process.daemonize = true
