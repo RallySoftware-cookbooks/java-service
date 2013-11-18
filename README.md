@@ -19,7 +19,7 @@ Includes the following recipes and should be included before using the java_serv
 ## Resources and Providers
 ### java_service
 
-#### :create is the default action, it sets up the service
+#### :enable is the default action, it sets up the service and delegates to bluepill's enable action.
 
 If you need to specify the class.
 
@@ -28,6 +28,7 @@ java_service 'echoserver' do
   main_class 'EchoServer'
   classpath '/path/server.jar'
   user 'theuser'
+  action [:enable, :load, :start]
 end
 ```
 
@@ -37,6 +38,7 @@ If you have an executable jar.
 java_service 'echoserver' do
   jar '/path/server.jar'
   user 'theuser'
+  action [:enable, :load, :start]
 end
 ```
 
@@ -67,7 +69,7 @@ default[:echoserver][:java][:args] = ['foo', 'bar']
 
 Note that 'echoserver' is ths value of `service_name` as specified in the `java_service` provider. This is useful if you want different values on different nodes.
 
-#### `java_service` also supports the following actions: :start, :stop, :enable, :disable, :load, :restart, and :reload
+#### `java_service` also supports the following actions: :start, :stop, :disable, :load, :restart, and :reload
 These actions maniuplate the alreaded created service.
 
 ## License

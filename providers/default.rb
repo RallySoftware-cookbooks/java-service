@@ -10,6 +10,26 @@ action :stop do
 end
 
 action :enable do
+  if new_resource.main_class && new_resource.jar
+    raise 'You can specify a main_class or a jar file but not both.'
+  end
+
+  unless new_resource.main_class || new_resource.jar
+    raise 'You must specify main_class or jar'
+  end
+
+  template "#{pill_file_dir}/#{new_resource.service_name}.pill" do
+    source 'service.pill.erb'
+    cookbook 'java-service'
+    variables ({
+      :name => new_resource.service_name,
+      :java_command => java_command,
+      :user => new_resource.user,
+      :log_file => new_resource.log_file,
+      :working_dir => new_resource.working_dir
+    })
+  end
+
   delegate_action :enable
 end
 
@@ -30,56 +50,30 @@ action :reload do
   delegate_action :reload
 end
 
-action :create do
+def rotate_service_log
   chef_gem 'logrotate' do
     action :install
   end
 
-  rotate_service_log
-
-  if new_resource.main_class && new_resource.jar
-    raise 'You can specify a main_class or a jar file but not both.'
-  end
-
-  unless new_resource.main_class || new_resource.jar
-    raise 'You must specify main_class or jar'
-  end
-
-  pill_file_dir = new_resource.pill_file_dir || node['bluepill']['conf_dir']
-
-  template "#{pill_file_dir}/#{new_resource.service_name}.pill" do
-    source 'service.pill.erb'
-    cookbook 'java-service'
-    variables ({
-      :name => new_resource.service_name,
-      :java_command => java_command,
-      :user => new_resource.user,
-      :log_file => new_resource.log_file,
-      :working_dir => new_resource.working_dir
-    })
-  end
-
-  bluepill_service new_resource.service_name do
-    action [:enable, :load, :start]
-    conf_dir pill_file_dir
-  end
-end
-
-def rotate_service_log
   require 'logrotate'
 
-  ruby_block "Rotating log file" do
+  ruby_block 'Rotating log file' do #~FC021
     block do
       LogRotate.rotate_file(new_resource.log_file, :count => 5, :gzip => true)
     end
-    only_if { !new_resource.log_file.nil? && ::File.exist?(new_resource.log_file) }
+    only_if { !new_resource.log_file.nil? && ::File.exist?(new_resource.log_file) && !::File.zero?(new_resource.log_file) }
   end
 end
 
 def delegate_action(action)
   bluepill_service new_resource.service_name do
     action action
+    conf_dir pill_file_dir
   end
+end
+
+def pill_file_dir
+  new_resource.pill_file_dir || node['bluepill']['conf_dir']
 end
 
 def java_command
