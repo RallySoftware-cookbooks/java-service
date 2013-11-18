@@ -1,15 +1,6 @@
 use_inline_resources
 
-action :start do
-  rotate_service_log
-  delegate_action :start
-end
-
-action :stop do
-  delegate_action :stop
-end
-
-action :enable do
+action :create do
   if new_resource.main_class && new_resource.jar
     raise 'You can specify a main_class or a jar file but not both.'
   end
@@ -29,7 +20,18 @@ action :enable do
       :working_dir => new_resource.working_dir
     })
   end
+end
 
+action :start do
+  rotate_service_log
+  delegate_action :start
+end
+
+action :stop do
+  delegate_action :stop
+end
+
+action :enable do
   delegate_action :enable
 end
 
