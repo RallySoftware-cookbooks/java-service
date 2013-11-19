@@ -17,7 +17,7 @@ execute 'jar cvfm server.jar manifest.txt EchoServer.class' do
 end
 
 java_service 'echoserver' do
-  action [:create, :enable, :load, :start]
+  action [:create, :enable, :load]
   main_class 'EchoServer'
   classpath '/root/server.jar'
   user 'root'
@@ -26,7 +26,7 @@ java_service 'echoserver' do
 end
 
 java_service 'echoserver2' do
-  action [:create, :enable, :load, :start]
+  action [:create, :enable, :load]
   jar '/root/server.jar'
   user 'root'
   working_dir '/root'
@@ -34,19 +34,23 @@ java_service 'echoserver2' do
 end
 
 java_service 'nooptionsorargs' do
-  action [:create, :enable, :load, :start]
+  action [:create, :enable, :load]
   jar '/root/server.jar'
   user 'root'
 end
 
-# java_service 'echoserver' do
-#   action :restart
-# end
+java_service 'echoserver' do
+  action :restart
+  pill_file_dir '/root'
+end
 
-# java_service 'echoserver' do
-#   action :stop
-# end
+java_service 'echoserver' do
+  action :stop
+  pill_file_dir '/root'
+end
 
-# java_service 'echoserver' do
-#   action :start
-# end
+java_service 'echoserver' do
+  action :start
+  pill_file_dir '/root'
+end
+

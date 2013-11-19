@@ -25,10 +25,12 @@ end
 action :start do
   rotate_service_log
   delegate_action :start
+  wait_for_start
 end
 
 action :stop do
   delegate_action :stop
+  wait_for_stop
 end
 
 action :enable do
@@ -44,12 +46,45 @@ action :load do
 end
 
 action :restart do
-  rotate_service_log
-  delegate_action :restart
+  action_stop
+  action_start
 end
 
 action :reload do
   delegate_action :reload
+end
+
+def wait_for_start
+  ruby_block "waiting for #{new_resource} to start" do
+    block do
+      status = bluepill_status
+      if status.exitstatus != 0 || status.stdout !~ /.*\(pid:\d+\):\sup/
+        raise 'service not started'
+      end
+    end
+    retries new_resource.start_retries
+    retry_delay new_resource.start_delay
+  end
+end
+
+def wait_for_stop
+  ruby_block "waiting for #{new_resource} to stop" do
+    block do
+      status = bluepill_status
+      if status.exitstatus == 0
+        unless status.stdout =~ /.*\(pid:\d+\):\sunmonitored/
+          raise 'service not stopped'
+        end
+      end
+    end
+    retries new_resource.stop_retries
+    retry_delay new_resource.stop_delay
+  end
+end
+
+def bluepill_status
+  cmd = Mixlib::ShellOut.new("#{node['bluepill']['bin']} #{new_resource.name} status")
+  cmd.run_command
 end
 
 def rotate_service_log

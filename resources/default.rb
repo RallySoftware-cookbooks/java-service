@@ -14,3 +14,7 @@ attribute :hotspot_options, :kind_of => Hash
 attribute :args, :kind_of => Array
 attribute :pill_file_dir, :kind_of => String
 attribute :log_file, :kind_of => String
+attribute :start_retries, :kind_of => Fixnum, :default => 5
+attribute :start_delay, :kind_of => Fixnum, :default => 2
+attribute :stop_retries, :kind_of => Fixnum, :default => 5
+attribute :stop_delay, :kind_of => Fixnum, :default => 2

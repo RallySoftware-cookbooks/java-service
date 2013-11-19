@@ -56,6 +56,11 @@ end
 * `working_dir` - the working directory for the Java process
 * `pill_file_dir` - the location to place the bluepill pill file. If not specified uses the default from bluepill.
 * `log_file` - the file that will get the contents of stdout and stderr. Full path is required.
+* `start_retries` - the number of times to attempt to start the process, defaults to 5.
+* `start_delay` - the delay between start attempts, defaults to 2.
+* `stop_retries` - the number of times to attempt to stop the process, defaults to 5.
+* `stop_delay` - the delay between stop attempts, defaults to 2.
+
 
 Instead of passing in `system_properties`, `standard_options`, `non_standard_options`, `hotspot_options`, `args` you can set node attributes like:
 

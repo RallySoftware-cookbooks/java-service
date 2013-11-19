@@ -44,7 +44,9 @@ public class EchoServer
 
   public static void main(String[] args)
   {
-    EchoServer s = new EchoServer(Integer.parseInt(System.getProperty("port")));
+    int port = Integer.parseInt(System.getProperty("port"));
+    System.out.println("Starting the echo server on port " + port);
+    EchoServer s = new EchoServer(port);
     s.serve();
   }
 
