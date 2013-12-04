@@ -22,9 +22,9 @@ describe JavaCommand do
         :standard_options => { 'server' => nil },
         :non_standard_options => { 'ms' => '69m' },
         :hotspot_options => { 'PrintCompilation' => true },
-        :args => ['balls', 'droopy']
+        :args => ['herp', 'derp']
       }}
-      its(:to_s) { should == 'java -Dfoo=bar -server -Xms69m -XX:+PrintCompilation SomeClass balls droopy' }
+      its(:to_s) { should == 'java -Dfoo=bar -server -Xms69m -XX:+PrintCompilation SomeClass herp derp' }
     end
   end
 
@@ -39,9 +39,9 @@ describe JavaCommand do
         :standard_options => { 'server' => nil },
         :non_standard_options => { 'ms' => '69m' },
         :hotspot_options => { 'PrintCompilation' => true },
-        :args => ['balls', 'droopy']
+        :args => ['herp', 'derp']
       }}
-      its(:to_s) { should == 'java -Dfoo=bar -server -Xms69m -XX:+PrintCompilation -jar /path/application.jar balls droopy' }
+      its(:to_s) { should == 'java -Dfoo=bar -server -Xms69m -XX:+PrintCompilation -jar /path/application.jar herp derp' }
     end
   end
 end

@@ -1,4 +1,4 @@
-include_recipe 'java-service'
+include_recipe 'java_service'
 
 template '/root/EchoServer.java' do
   source 'EchoServer.java.erb'

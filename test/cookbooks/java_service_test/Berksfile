@@ -2,4 +2,4 @@ site :opscode
 
 metadata
 
-cookbook 'java-service', :path => '../../..'
+cookbook 'java_service', :path => '../../..'

@@ -13,4 +13,4 @@ version          '0.1.0'
 # depends should specify 2 symver places
 # depends 'rvm', '~> 0.4'
 
-depends 'java-service'
+depends 'java_service'

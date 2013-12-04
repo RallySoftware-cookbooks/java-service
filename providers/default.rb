@@ -11,7 +11,7 @@ action :create do
 
   template "#{pill_file_dir}/#{new_resource.service_name}.pill" do
     source 'service.pill.erb'
-    cookbook 'java-service'
+    cookbook 'java_service'
     variables ({
       :name => new_resource.service_name,
       :java_command => java_command,
