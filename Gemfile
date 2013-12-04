@@ -4,4 +4,3 @@ gem 'cookbook-development', :git => 'https://github.com/RallySoftware-cookbooks/
 
 gem 'logrotate'
 
-gem 'test-kitchen', '1.0.0.beta3'
