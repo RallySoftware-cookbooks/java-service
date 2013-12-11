@@ -118,7 +118,7 @@ def java_command
     when Proc
       instance_eval(&new_resource.classpath)
     when Array
-      new_resource.classpath.map(&:to_s).join(":")
+      new_resource.classpath.map(&:to_s).join(':')
     else
       new_resource.classpath
   end
