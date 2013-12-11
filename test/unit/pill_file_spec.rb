@@ -5,6 +5,7 @@ describe 'java_service_test::default' do
 
   it { should render_file('/root/echoserver.pill').with_content(echoserver_pill_file_content) }
   it { should render_file('/etc/bluepill/echoserver2.pill').with_content(echoserver2_pill_file_content) }
+  it { should render_file('/etc/bluepill/echoserver3.pill').with_content(echoserver3_pill_file_content) }
   it { should render_file('/etc/bluepill/nooptionsorargs.pill').with_content(nooptionsorargs_pill_file_content) }
 
 end
@@ -34,6 +35,22 @@ Bluepill.application("echoserver2") do |app|
     process.working_dir = "/root"
     process.start_command = "java -classpath late:bound:string -Dport=9989 -server -Xms256m -XX:+UseConcMarkSweepGC -jar /root/server.jar foo bar"
     process.pid_file = "/tmp/echoserver2.pid"
+    process.uid = "root"
+    process.gid = "root"
+    process.daemonize = true
+  end
+end
+PILL
+end
+
+def echoserver3_pill_file_content
+  <<-PILL.strip
+# -*- mode: ruby -*-
+Bluepill.application("echoserver3") do |app|
+  app.process("echoserver3") do |process|
+    process.working_dir = "/root"
+    process.start_command = "java -classpath an:array:of:paths -jar /root/server.jar"
+    process.pid_file = "/tmp/echoserver3.pid"
     process.uid = "root"
     process.gid = "root"
     process.daemonize = true

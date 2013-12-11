@@ -33,6 +33,14 @@ java_service 'echoserver2' do
   classpath Proc.new{ "late:bound:string" }
 end
 
+java_service 'echoserver3' do
+  action [:create, :enable, :load]
+  jar '/root/server.jar'
+  user 'root'
+  working_dir '/root'
+  classpath ["an", "array", "of", "paths"]
+end
+
 java_service 'nooptionsorargs' do
   action [:create, :enable, :load]
   jar '/root/server.jar'

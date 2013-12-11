@@ -114,7 +114,14 @@ def pill_file_dir
 end
 
 def java_command
-  classpath = new_resource.classpath.is_a?(Proc) ? instance_eval(&new_resource.classpath) : new_resource.classpath
+  classpath = case new_resource.classpath
+    when Proc
+      instance_eval(&new_resource.classpath)
+    when Array
+      new_resource.classpath.map(&:to_s).join(":")
+    else
+      new_resource.classpath
+  end
   system_properties = resource_or_node_value('system_properties', '-D')
   standard_options = resource_or_node_value('standard_options', '-')
   non_standard_options = resource_or_node_value('non_standard_options', '-X')
