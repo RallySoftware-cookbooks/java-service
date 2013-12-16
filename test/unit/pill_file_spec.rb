@@ -13,7 +13,7 @@ end
 def echoserver_pill_file_content
   <<-PILL.strip
 # -*- mode: ruby -*-
-Bluepill.application("echoserver") do |app|
+Bluepill.application("echoserver", :log_file => "./bluepill.log") do |app|
   app.process("echoserver") do |process|
     process.working_dir = "."
     process.start_command = "java -classpath /root/server.jar -Dport=9999 -server -Xms256m -XX:+UseConcMarkSweepGC EchoServer foo bar"
@@ -30,7 +30,7 @@ end
 def echoserver2_pill_file_content
   <<-PILL.strip
 # -*- mode: ruby -*-
-Bluepill.application("echoserver2") do |app|
+Bluepill.application("echoserver2", :log_file => "/root/bluepill.log") do |app|
   app.process("echoserver2") do |process|
     process.working_dir = "/root"
     process.start_command = "java -classpath late:bound:string -Dport=9989 -server -Xms256m -XX:+UseConcMarkSweepGC -jar /root/server.jar foo bar"
@@ -46,7 +46,7 @@ end
 def echoserver3_pill_file_content
   <<-PILL.strip
 # -*- mode: ruby -*-
-Bluepill.application("echoserver3") do |app|
+Bluepill.application("echoserver3", :log_file => "/root/bluepill.log") do |app|
   app.process("echoserver3") do |process|
     process.working_dir = "/root"
     process.start_command = "java -classpath an:array:of:paths -jar /root/server.jar"
@@ -62,7 +62,7 @@ end
 def nooptionsorargs_pill_file_content
   <<-PILL.strip
 # -*- mode: ruby -*-
-Bluepill.application("nooptionsorargs") do |app|
+Bluepill.application("nooptionsorargs", :log_file => "./bluepill.log") do |app|
   app.process("nooptionsorargs") do |process|
     process.working_dir = "."
     process.start_command = "java -jar /root/server.jar"

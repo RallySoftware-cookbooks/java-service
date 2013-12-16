@@ -1,5 +1,5 @@
 # -*- mode: ruby -*-
-Bluepill.application("<%= @name %>") do |app|
+Bluepill.application("<%= @name %>", :log_file => "<%= @working_dir %>/bluepill.log") do |app|
   app.process("<%= @name %>") do |process|
     process.working_dir = "<%= @working_dir %>"
     process.start_command = "<%= @java_command %>"
