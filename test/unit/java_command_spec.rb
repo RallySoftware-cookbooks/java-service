@@ -44,4 +44,10 @@ describe JavaCommand do
       its(:to_s) { should == 'java -Dfoo=bar -server -Xms69m -XX:+PrintCompilation -jar /path/application.jar herp derp' }
     end
   end
+
+  context 'when created with the path to a war file' do
+    let(:options) { Hash.new }
+    let(:class_or_jar) { '/path/to/application.war' }
+    its(:to_s) { should == 'java -jar /path/to/application.war' }
+  end
 end

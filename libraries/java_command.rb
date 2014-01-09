@@ -1,6 +1,6 @@
 class JavaCommand
   def initialize(class_or_jar, options = {})
-    if class_or_jar.end_with?('.jar')
+    if /\.war|\.jar$/ =~ class_or_jar
       @jar = class_or_jar
     else
       @class_name = class_or_jar
