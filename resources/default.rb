@@ -18,3 +18,4 @@ attribute :start_retries, :kind_of => Fixnum, :default => 5
 attribute :start_delay, :kind_of => Fixnum, :default => 2
 attribute :stop_retries, :kind_of => Fixnum, :default => 5
 attribute :stop_delay, :kind_of => Fixnum, :default => 2
+attribute :start_check, :kind_of => Proc

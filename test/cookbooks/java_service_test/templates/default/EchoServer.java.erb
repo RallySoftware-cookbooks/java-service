@@ -44,7 +44,14 @@ public class EchoServer
 
   public static void main(String[] args)
   {
-    int port = Integer.parseInt(System.getProperty("port"));
+    try {
+      System.out.println("Sleep timer: " + Integer.getInteger("timer", 0));
+      Thread.sleep(Integer.getInteger("timer", 0)); //This sleep allows us to test that our start_check works
+    } catch (Exception e) {
+      System.out.println("Caught Exception: " + e.getMessage());
+    }
+    int port = Integer.getInteger("port", 9000);
+    Integer.parseInt(System.getProperty("port"));
     System.out.println("Starting the echo server on port " + port);
     EchoServer s = new EchoServer(port);
     s.serve();

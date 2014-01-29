@@ -17,6 +17,10 @@ describe 'java_service_test::default' do
     it { should be_listening }
   end
 
+  describe port(9002) do
+    it { should be_listening }
+  end
+
   describe file('/root/echoserver.pill') do
     it { should be_file }
   end

@@ -55,11 +55,16 @@ action :reload do
 end
 
 def wait_for_start
-  ruby_block "waiting for #{new_resource} to start" do
+  ruby_block "waiting for #{new_resource.name} to start" do
     block do
-      status = bluepill_status
-      if status.exitstatus != 0 || status.stdout !~ /.*\(pid:\d+\):\sup/
-        raise 'service not started'
+      unless new_resource.start_check.nil?
+        status = new_resource.start_check.call
+        raise "#{new_resource.name} not started" if status.nil?
+      else
+        status = bluepill_status
+        if status.exitstatus != 0 || status.stdout !~ /.*\(pid:\d+\):\sup/
+          raise "#{new_resource.name} not started"
+        end
       end
     end
     retries new_resource.start_retries
@@ -68,7 +73,7 @@ def wait_for_start
 end
 
 def wait_for_stop
-  ruby_block "waiting for #{new_resource} to stop" do
+  ruby_block "waiting for #{new_resource.name} to stop" do
     block do
       status = bluepill_status
       if status.exitstatus == 0

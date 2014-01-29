@@ -49,7 +49,7 @@ def echoserver3_pill_file_content
 Bluepill.application("echoserver3", :log_file => "/root/bluepill.log") do |app|
   app.process("echoserver3") do |process|
     process.working_dir = "/root"
-    process.start_command = "java -classpath an:array:of:paths -jar /root/server.jar"
+    process.start_command = "java -classpath an:array:of:paths -Dport=9001 -jar /root/server.jar"
     process.pid_file = "/tmp/echoserver3.pid"
     process.uid = "root"
     process.gid = "root"

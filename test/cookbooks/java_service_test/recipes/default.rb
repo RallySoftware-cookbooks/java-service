@@ -39,6 +39,21 @@ java_service 'echoserver3' do
   user 'root'
   working_dir '/root'
   classpath ["an", "array", "of", "paths"]
+  system_properties "port" => "9001"
+end
+
+java_service 'echoserver4' do
+  action [:create, :enable, :load, :start]
+  main_class 'EchoServer'
+  classpath '/root/server.jar'
+  user 'root'
+  log_file '/root/echoserver4.log'
+  system_properties({port: "9002", timer: "2000"})
+  start_retries 3
+  start_delay   1
+  start_check Proc.new {
+    Mixlib::ShellOut.new("netstat -tunl | grep -- 9002").run_command.stdout =~ /LISTEN/
+  }
 end
 
 java_service 'nooptionsorargs' do
@@ -61,4 +76,3 @@ java_service 'echoserver' do
   action :start
   pill_file_dir '/root'
 end
-
