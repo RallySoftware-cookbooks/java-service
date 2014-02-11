@@ -12,7 +12,7 @@ file '/root/manifest.txt' do
   content "Main-Class: EchoServer\n"
 end
 
-execute 'jar cvfm server.jar manifest.txt EchoServer.class' do
+execute '/usr/lib/jvm/java-1.6.0/bin/jar cvfm server.jar manifest.txt EchoServer.class' do
   cwd '/root'
 end
 
