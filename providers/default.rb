@@ -55,15 +55,15 @@ action :reload do
 end
 
 def wait_for_start
-  ruby_block "waiting for #{new_resource.name} to start" do
+  ruby_block "waiting for #{new_resource.service_name} to start" do
     block do
       unless new_resource.start_check.nil?
         status = new_resource.start_check.call
-        raise "#{new_resource.name} not started" if status.nil?
+        raise "#{new_resource.service_name} not started" if status.nil?
       else
         status = bluepill_status
         if status.exitstatus != 0 || status.stdout !~ /.*\(pid:\d+\):\sup/
-          raise "#{new_resource.name} not started"
+          raise "#{new_resource.service_name} not started"
         end
       end
     end
@@ -73,7 +73,7 @@ def wait_for_start
 end
 
 def wait_for_stop
-  ruby_block "waiting for #{new_resource.name} to stop" do
+  ruby_block "waiting for #{new_resource.service_name} to stop" do
     block do
       status = bluepill_status
       if status.exitstatus == 0
@@ -88,7 +88,7 @@ def wait_for_stop
 end
 
 def bluepill_status
-  cmd = Mixlib::ShellOut.new("#{node['bluepill']['bin']} #{new_resource.name} status")
+  cmd = Mixlib::ShellOut.new("#{node['bluepill']['bin']} #{new_resource.service_name} status")
   cmd.run_command
 end
 
@@ -145,6 +145,6 @@ end
 
 def resource_or_node_value(name, node_name, default_value = {})
   from_resource = new_resource.send(name)
-  from_node = (node[new_resource.name] && node[new_resource.name]['java'] && node[new_resource.name]['java'][node_name]) || default_value
+  from_node = (node[new_resource.service_name] && node[new_resource.service_name]['java'] && node[new_resource.service_name]['java'][node_name]) || default_value
   return from_resource || from_node
 end
