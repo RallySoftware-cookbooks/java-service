@@ -119,13 +119,14 @@ def pill_file_dir
 end
 
 def java_command
-  classpath = case new_resource.classpath
+  resource_or_node_classpath = resource_or_node_value('classpath', 'classpath', nil)
+  classpath = case resource_or_node_classpath
     when Proc
-      instance_eval(&new_resource.classpath)
+      instance_eval(&resource_or_node_classpath)
     when Array
-      new_resource.classpath.map(&:to_s).join(':')
+      resource_or_node_classpath.map(&:to_s).join(':')
     else
-      new_resource.classpath
+      resource_or_node_classpath
   end
   system_properties = resource_or_node_value('system_properties', '-D')
   standard_options = resource_or_node_value('standard_options', '-')
