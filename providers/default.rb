@@ -46,8 +46,9 @@ action :load do
 end
 
 action :restart do
-  action_stop
-  action_start
+  rotate_service_log
+  delegate_action :restart
+  wait_for_start
 end
 
 action :reload do
