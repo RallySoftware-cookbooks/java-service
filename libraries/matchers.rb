@@ -1,4 +1,6 @@
 if defined?(ChefSpec)
+  ChefSpec::Runner.define_runner_method(:java_service)
+
   def create_java_service(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:java_service, :create, resource_name)
   end
