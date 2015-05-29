@@ -109,7 +109,7 @@ def rotate_service_log
 end
 
 def delegate_action(action)
-  bluepill_service new_resource.service_name do
+  rs_bluepill_service new_resource.service_name do
     action action
     conf_dir pill_file_dir
   end

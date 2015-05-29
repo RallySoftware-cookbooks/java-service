@@ -25,4 +25,4 @@
 #
 
 include_recipe 'java'
-include_recipe 'bluepill'
+include_recipe 'rs_bluepill'

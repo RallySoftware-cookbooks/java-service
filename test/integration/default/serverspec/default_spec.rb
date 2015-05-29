@@ -38,7 +38,7 @@ describe 'java_service_test::default' do
   end
 
   describe command('/opt/chef/embedded/bin/bluepill echoserver status') do
-    it { should return_stdout /up/ }
-    it { should_not return_stdout /unmonitored/ }
+    its(:stdout) { should contain /up/ }
+    its(:stdout) { should_not contain /unmonitored/ }
   end
 end
