@@ -111,7 +111,7 @@ end
 def delegate_action(action)
   rs_bluepill_service new_resource.service_name do
     action action
-    conf_dir pill_file_dir
+    Chef::Resource::BluepillService.respond_to?(:conf_dir) ? conf_dir(pill_file_dir) : node.set['bluepill']['conf_dir'] = pill_file_dir
   end
 end
 
