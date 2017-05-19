@@ -37,7 +37,7 @@ class JavaCommand
   end
 
   def generate_command
-    command = if java_path.empty? ? ['java'] : [java_path]
+    command = java_path.empty? ? ['java'] : [java_path]
 
     (command << '-classpath' << classpath) if classpath
 
