@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 describe 'java_service_test::default' do
-  subject { ChefSpec::Runner.new(step_into: ['java_service'], log_level: :error).converge described_recipe }
+  subject { ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8', step_into: ['java_service'], log_level: :error).converge described_recipe }
 
   it { should render_file('/root/echoserver.pill').with_content(echoserver_pill_file_content) }
   it { should render_file('/etc/bluepill/echoserver2.pill').with_content(echoserver2_pill_file_content) }

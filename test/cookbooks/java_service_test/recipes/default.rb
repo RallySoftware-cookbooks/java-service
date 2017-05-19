@@ -64,15 +64,39 @@ end
 
 java_service 'echoserver' do
   action :restart
+  main_class 'EchoServer'
+  classpath '/root/server.jar'
+  user 'root'
   pill_file_dir '/root'
+  log_file '/root/theoutput.log'
 end
 
 java_service 'echoserver' do
   action :stop
+  main_class 'EchoServer'
+  classpath '/root/server.jar'
+  user 'root'
   pill_file_dir '/root'
+  log_file '/root/theoutput.log'
 end
 
 java_service 'echoserver' do
   action :start
+  main_class 'EchoServer'
+  classpath '/root/server.jar'
+  user 'root'
   pill_file_dir '/root'
+  log_file '/root/theoutput.log'
+end
+
+service 'bluepill_echoserver' do
+  action :restart
+end
+
+service 'bluepill_echoserver' do
+  action :stop
+end
+
+service 'bluepill_echoserver' do
+  action :start
 end

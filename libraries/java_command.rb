@@ -7,6 +7,7 @@ class JavaCommand
     end
 
     @classpath            = options[:classpath]
+    @java_path            = options[:java_path] || []
     @system_properties    = map_options(options[:system_properties], SystemProperty)
     @standard_options     = map_options(options[:standard_options], StandardOption)
     @non_standard_options = map_options(options[:non_standard_options], NonStandardOption)
@@ -20,6 +21,7 @@ class JavaCommand
 
   private
 
+  attr_reader :java_path
   attr_reader :jar
   attr_reader :class_name
   attr_reader :classpath
@@ -35,7 +37,7 @@ class JavaCommand
   end
 
   def generate_command
-    command = ['java']
+    command = java_path.empty? ? ['java'] : [java_path]
 
     (command << '-classpath' << classpath) if classpath
 
@@ -60,6 +62,10 @@ def rotate_log_file(log_file_path=nil)
 
   log_file_path = File.expand_path log_file_path
   if File.exist? log_file_path
+    chef_gem 'logrotate' do
+      action :install
+    end
+    require 'logrotate'
     LogRotate.rotate_file(log_file_path, :count => 5, :gzip => true)
   else
     FileUtils.mkdir_p(File.dirname(log_file_path))

@@ -25,7 +25,6 @@ end
 action :start do
   rotate_service_log
   delegate_action :start
-  wait_for_start
 end
 
 action :stop do
@@ -48,7 +47,6 @@ end
 action :restart do
   rotate_service_log
   delegate_action :restart
-  wait_for_start
 end
 
 action :reload do
@@ -94,12 +92,7 @@ def bluepill_status
 end
 
 def rotate_service_log
-  chef_gem 'logrotate' do
-    action :install
-  end
-
   require 'logrotate'
-
   ruby_block 'Rotating log file' do #~FC021
     block do
       LogRotate.rotate_file(new_resource.log_file, :count => 5, :gzip => true)
