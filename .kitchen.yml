@@ -15,5 +15,8 @@ suites:
 - name: default
   busser:
     sudo: true
+  attributes:
+    bluepill:
+      version: '0.1.1'
   run_list:
     - recipe[java_service_test]
