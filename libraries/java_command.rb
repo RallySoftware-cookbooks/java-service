@@ -62,6 +62,10 @@ def rotate_log_file(log_file_path=nil)
 
   log_file_path = File.expand_path log_file_path
   if File.exist? log_file_path
+    chef_gem 'logrotate' do
+      action :install
+    end
+    require 'logrotate'
     LogRotate.rotate_file(log_file_path, :count => 5, :gzip => true)
   else
     FileUtils.mkdir_p(File.dirname(log_file_path))
